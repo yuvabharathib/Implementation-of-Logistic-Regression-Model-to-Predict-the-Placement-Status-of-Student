@@ -18,6 +18,7 @@ Plot the scatter plot
 Use mse,rmse,mae formmula to find
 ## Program:
 Developed by: Yuvabharathi.B
+
 RegisterNumber:212222230181
 
 Program to implement the simple linear regression model for predicting the marks scored.
