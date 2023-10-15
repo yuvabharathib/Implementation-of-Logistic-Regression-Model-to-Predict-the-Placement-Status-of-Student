@@ -1,112 +1,98 @@
-# EXP 2: Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored
+# Implementation-of-Linear-Regression-Using-Gradient-Descent
 
 ## AIM:
-To write a program to predict the marks scored by a student using the simple linear regression model.
+To write a program to predict the profit of a city using the linear regression model with gradient descent.
 
 ## Equipments Required:
 1. Hardware – PCs
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-### STEP 1:
-Import the needed packages
-### STEP 2: 
-Assigning hours To X and Scores to Y
-### STEP 3:
-Plot the scatter plot
-### STEP 4 :
-Use mse,rmse,mae formmula to find
+1. Import pandas, numpy and mathplotlib.pyplot
+2. Trace the best fit line and calculate the cost function
+3. Calculate the gradient descent and plot the graph for it
+4. Predict the profit for two population sizes. 
+
 ## Program:
+```
+Program to implement the linear regression using gradient descent.
 Developed by: Yuvabharathi.B
+RegisterNumber: 212222230181
 
-RegisterNumber:212222230181
-
-Program to implement the simple linear regression model for predicting the marks scored.
-### df.head()
-```
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.metrics import mean_absolute_error,mean_squared_error
-df=pd.read_csv('/content/student_scores.csv')
-df.head()
-```
-### df.tail()
-```
-df.tail()
-```
-### Array value of X
-```
-X = df.iloc[:,:-1].values
-X
-```
-### Array value of Y
-```
-Y = df.iloc[:,1].values
-Y
-```
-### Values of Y prediction
-```
-Y_pred
-```
-### Array values of Y test
-```
+data = pd.read_csv("Placement_Data.csv")
+print(data.head())
+data1 = data.copy()
+data1= data1.drop(["sl_no","salary"],axis=1)
+print(data1.head())
+data1.isnull().sum()
+data1.duplicated().sum()
+from sklearn.preprocessing import LabelEncoder
+lc = LabelEncoder()
+data1["gender"] = lc.fit_transform(data1["gender"])
+data1["ssc_b"] = lc.fit_transform(data1["ssc_b"])
+data1["hsc_b"] = lc.fit_transform(data1["hsc_b"])
+data1["hsc_s"] = lc.fit_transform(data1["hsc_s"])
+data1["degree_t"]=lc.fit_transform(data["degree_t"])
+data1["workex"] = lc.fit_transform(data1["workex"])
+data1["specialisation"] = lc.fit_transform(data1["specialisation"])
+data1["status"]=lc.fit_transform(data1["status"])
+print(data1)
+x = data1.iloc[:,:-1]
+print(x)
+y = data1["status"]
 from sklearn.model_selection import train_test_split
-X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=1/3,random_state=0)
-from sklearn.linear_model import LinearRegression
-regressor=LinearRegression()
-regressor.fit(X_train,Y_train)
-Y_pred=regressor.predict(X_test)
-```
-### Training Set Graph
-```
-plt.scatter(X_train,Y_train,color="orange")
-plt.plot(X_train,regressor.predict(X_train),color="purple")
-plt.title("Hours vs Scores (Training Set)")
-plt.xlabel("Hours")
-plt.ylabel("Scores")
-plt.show()
-```
-### Test Set Graph
-```
-plt.scatter(X_test,Y_test,color="grey")
-plt.plot(X_test,regressor.predict(X_test),color="blue")
-plt.title("Hours vs Scores (Test Set)")
-plt.xlabel("Hours")
-plt.ylabel("Scores")
-plt.show()
-```
-### Values of MSE,MAE AND RMSE
-```
-mse=mean_squared_error(Y_test,Y_pred)
-print('MSE = ',mse)
-mae=mean_absolute_error(Y_test,Y_pred)
-print('MAE = ',mae)
-rmse=np.sqrt(mse)
-print("RMSE = ",rmse)
+x_train, x_test, y_train, y_test = train_test_split(x,y,test_size=0.2,random_state=0)
+from sklearn.linear_model import LogisticRegression
+lr = LogisticRegression(solver="liblinear")
+print(lr.fit(x_train,y_train))
+y_pred = lr.predict(x_test)
+print(y_pred)
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_test,y_pred)
+print(accuracy)
+from sklearn.metrics import confusion_matrix
+confusion = confusion_matrix(y_test,y_pred)
+print(confusion)
+from sklearn.metrics import classification_report
+classification_report1 = classification_report(y_test,y_pred)
+print(classification_report1)
+print(lr.predict([[1,80,1,90,1,1,90,1,0,85,1,85]]))
 ```
 ## Output:
-### df.head()
-![l1](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/8c8dd58a-a73b-4005-ba81-1d8a13367284)
-### df.tail()
-![l2](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/556ed15a-c648-4a2c-a31d-2c3f16f8739b)
-### Array value of X
-![l3](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/fc44abb6-91f7-4201-a308-0439b343b4c3)
-### Array value of Y
-![l4](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/d02ec9fa-0030-45c0-abab-98b58141838d)
-### Values of Y prediction
-![l5](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/e1f2a72a-48fb-4a30-94df-609cdf01f7dd)
-### Array values of Y test
-![l8](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/4fa40811-e4ee-41ac-bb7c-9af4b62c2ccb)
-### Training Set Graph
-![l6](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/97df94c5-1dee-4a9e-9aed-518f3e7a22b6)
-### Test Set Graph
-![l7](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/a5daf700-7e24-4204-9be8-da6f7249e832)
-### Values of MSE,MAE AND RMSE
-![l9](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/2d7e0876-1d50-4848-8222-b9c7ddbf0f9d)
-![l10](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/855c2324-6cd7-418c-b488-0ac23e3be308)
-![l11](https://github.com/Brindha77/Implementation-of-Simple-Linear-Regression-Model-for-Predicting-the-Marks-Scored/assets/118889143/e7e90d2e-ebfa-4b8b-ad4d-393910849040)
 
+##  Placement Data:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/6994af0d-c9a4-4c5a-b10d-e7785b84a4f4)
+
+## Salary Data:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/4dd4fede-b0e0-447d-97b5-98904148e8ed)
+
+## Checking the null() function:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/7f59638b-48d7-4239-996f-374b7e57255b)
+
+## Data Duplicate:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/fda5143b-b0c6-4e44-8ee4-7ad98c1191f1)
+
+## print Data:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/228a1adc-68ae-4ca3-a7bc-0f9c62f29d71)
+
+## Data-Status:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/4792f579-d525-4b95-b1de-c1a56c307e79)
+
+## y_prediction array:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/f29dec1b-606b-41c4-97b9-e98e11b6a57b)
+
+## Accuracy value:
+![image](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/27881173-f288-4321-99fb-fa2a259a719b)
+
+## Confusion array:
+![ml409](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/d9b945e0-4545-4590-af40-a9e4aaa9f535)
+
+## Classification Report:
+![ml410](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/e775eca8-1347-4928-b0c5-d44132957c21)
+
+## Prediction of LR:
+![ml411](https://github.com/gokulvijayaramanuja/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/119577543/6d62f505-0a6c-42cb-9ab2-800e20f4858b)
 
 ## Result:
-Thus the program to implement the simple linear regression model for predicting the marks scored is written and verified using python programming.
+Thus the program to implement the the Logistic Regression Model to Predict the Placement Status of Student is written and verified using python programming.
